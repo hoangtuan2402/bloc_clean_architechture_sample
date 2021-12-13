@@ -25,11 +25,23 @@ class NumberTriviaPage extends StatelessWidget {
     );
   }
 
+  // BlocProvider<NumberTriviaBloc> buildBody(BuildContext context) {
+  //   return BlocProvider(
+  //     create: (_) => sl<NumberTriviaBloc>()..add(LoadHomeEvent()),
+  //     child: const Center(
+  //       child: Text(
+  //         "HELLO BLOC V8",
+  //         style: TextStyle(fontSize: 30),
+  //       ),
+  //     ),
+  //   );
+  // }
+
   BlocProvider<NumberTriviaBloc> buildBody(BuildContext context) {
     return BlocProvider(
       create: (_) => sl<NumberTriviaBloc>()
         ..add(
-          GetTriviaForRandomNumber(),
+          LoadHomeEvent(),
         ),
       child: Center(
         child: Padding(

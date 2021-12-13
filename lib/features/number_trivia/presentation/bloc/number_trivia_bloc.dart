@@ -31,10 +31,10 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
       : getConcreteNumberTrivia = concrete,
         getRandomNumberTrivia = random,
         super(Empty()) {
-    on<GetTriviaForConcreteNumber>(
+    on<LoadHomeEvent>(
           (event, emit) =>
           emit(
-            Loading(),
+            Empty(),
           ),
     );
     on<GetTriviaForConcreteNumber>((event, emit) async {
@@ -53,13 +53,27 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
               emit(Error(message: _mapFailureToMessage(failure)));
             },
                 (trivia) async {
+              print(trivia.text);
               emit(Loaded(trivia: trivia));
             },
           );
         },
       );
     });
-  }
+    on<GetTriviaForRandomNumber>((event, emit) async {
+      emit(Loading());
+      final failureOrTrivia = await getRandomNumberTrivia(NoParams());
+      await failureOrTrivia.fold(
+            (failure) async {
+          emit(Error(message: _mapFailureToMessage(failure)));
+        },
+            (trivia) async {
+              print(trivia.text);
+          emit(Loaded(trivia: trivia));
+        },
+      );
+    });
+    }
 
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {

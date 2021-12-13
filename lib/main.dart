@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.yellowAccent,
         accentColor: Colors.red
       ),
-      home:  NumberTriviaPage(),
+      home:  const NumberTriviaPage(),
     );
   }
 }
