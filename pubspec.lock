@@ -169,13 +169,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.10.0"
-  data_connection_checker:
+  data_connection_checker_tv:
     dependency: "direct main"
     description:
-      name: data_connection_checker
+      name: data_connection_checker_tv
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.4"
+    version: "0.3.5-nullsafety"
   equatable:
     dependency: "direct main"
     description:
