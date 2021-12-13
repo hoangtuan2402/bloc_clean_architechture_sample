@@ -2,6 +2,7 @@ import 'package:bloc_clean_architecture/util/input_converter.dart';
 import 'package:data_connection_checker_tv/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/network/network_info.dart';
@@ -26,8 +27,6 @@ Future<void> init() async {
       random: sl(),
     ),
   );
-
-
 
   // Use cases
   sl.registerLazySingleton(() => GetConcertNumberTrivia(sl()));
