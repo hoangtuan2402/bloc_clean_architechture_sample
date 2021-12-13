@@ -17,3 +17,4 @@ class GetTriviaForConcreteNumber extends NumberTriviaEvent {
 }
 
 class GetTriviaForRandomNumber extends NumberTriviaEvent {}
+class LoadHomeEvent extends NumberTriviaEvent {}

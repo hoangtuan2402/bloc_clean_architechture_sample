@@ -1,4 +1,5 @@
 import 'package:bloc_clean_architecture/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
+import 'package:bloc_clean_architecture/features/number_trivia/presentation/bloc/number_trivia_event.dart';
 import 'package:bloc_clean_architecture/features/number_trivia/presentation/bloc/number_trivia_state.dart';
 import 'package:bloc_clean_architecture/features/number_trivia/presentation/widgets/loading_widget.dart';
 import 'package:bloc_clean_architecture/features/number_trivia/presentation/widgets/message_display.dart';
@@ -26,7 +27,10 @@ class NumberTriviaPage extends StatelessWidget {
 
   BlocProvider<NumberTriviaBloc> buildBody(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<NumberTriviaBloc>(),
+      create: (_) => sl<NumberTriviaBloc>()
+        ..add(
+          GetTriviaForRandomNumber(),
+        ),
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(10),

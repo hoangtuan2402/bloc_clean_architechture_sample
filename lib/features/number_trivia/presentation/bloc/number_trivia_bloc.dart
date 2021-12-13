@@ -27,41 +27,39 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
     required GetConcertNumberTrivia concrete,
     required GetRandomNumberTrivia random,
     required this.inputConverter,
-  })  : getConcreteNumberTrivia = concrete,
+  })
+      : getConcreteNumberTrivia = concrete,
         getRandomNumberTrivia = random,
         super(Empty()) {
-    on<GetTriviaForConcreteNumber>(_onGetTriviaNumberConCreate);
-  }
-
-  void _onGetTriviaNumberConCreate(
-      GetTriviaForConcreteNumber event, Emitter<NumberTriviaState> emit) async {
-    final inputEither =
-        inputConverter.stringToUnsignedInteger(event.numberString);
-    inputEither.fold(
-      (failure) async* {
-        emit(Error(message: INVALID_INPUT_FAILURE_MESSAGE));
-      },
-      (integer) async* {
-        emit(Loading());
-        final failureOrTrivia =
-            await getConcreteNumberTrivia(Params(number: integer));
-        // _eitherLoadedOrErrorState(failureOrTrivia, emit);
-        failureOrTrivia.fold(
-              (failure) =>  emit(Error(message: _mapFailureToMessage(failure))),
-              (trivia) =>   emit(Loaded(trivia: trivia)),
-        );
-      },
+    on<GetTriviaForConcreteNumber>(
+          (event, emit) =>
+          emit(
+            Loading(),
+          ),
     );
+    on<GetTriviaForConcreteNumber>((event, emit) async {
+      final inputEither =
+      inputConverter.stringToUnsignedInteger(event.numberString);
+      await inputEither.fold(
+            (failure) async {
+          emit(Error(message: INVALID_INPUT_FAILURE_MESSAGE));
+        },
+            (integer) async {
+          emit(Loading());
+          final failureOrTrivia =
+          await getConcreteNumberTrivia(Params(number: integer));
+          await failureOrTrivia.fold(
+                (failure) async {
+              emit(Error(message: _mapFailureToMessage(failure)));
+            },
+                (trivia) async {
+              emit(Loaded(trivia: trivia));
+            },
+          );
+        },
+      );
+    });
   }
-
-  // Stream<NumberTriviaState> _eitherLoadedOrErrorState(
-  //   Either<Failure, NumberTrivia> failureOrTrivia,
-  // ) async* {
-  //   yield failureOrTrivia.fold(
-  //     (failure) => Error(message: _mapFailureToMessage(failure)),
-  //     (trivia) => Loaded(trivia: trivia),
-  //   );
-  // }
 
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
@@ -73,11 +71,4 @@ class NumberTriviaBloc extends Bloc<NumberTriviaEvent, NumberTriviaState> {
         return 'Unexpected error';
     }
   }
-
-// NumberTriviaState _eitherLoadedOrErrorState(
-//     Either<Failure, NumberTrivia> failureOrTrivia) {
-//   failureOrTrivia.fold(
-//       (failure) => Error(message: _mapFailureToMessage(failure)),
-//       (r) => Loaded(trivia: trivia));
-// }
 }
