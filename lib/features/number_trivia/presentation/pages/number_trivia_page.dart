@@ -10,11 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../injection_container.dart';
 
 class NumberTriviaPage extends StatelessWidget {
+  const NumberTriviaPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Number Trivia'),
+        title: const Text('Number Trivia'),
       ),
       body: SingleChildScrollView(
         child: buildBody(context),
@@ -51,9 +53,9 @@ class NumberTriviaPage extends StatelessWidget {
                   }
                 },
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               // Bottom half
-              TriviaControls()
+              const TriviaControls()
             ],
           ),
         ),
