@@ -21,6 +21,7 @@ dependencies:
   dartz: ^0.10.0
   # remote API
   connectivity: ^3.0.6
+  data_connection_checker: any
   http: ^0.13.4
   # local_cache
   shared_preferences: ^2.0.9
@@ -35,9 +36,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
+  assets:
+    - assets/
+    - assets/jsons/
   #   - images/a_dot_ham.jpeg
 
 
