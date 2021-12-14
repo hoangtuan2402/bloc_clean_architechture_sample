@@ -6,12 +6,12 @@ import 'package:flutter_test/flutter_test.dart';
 class MockDataConnectionChecker extends Mock implements DataConnectionChecker {}
 
 void main() {
-  late NetworkInfoImpl? networkInfo;
-  late MockDataConnectionChecker? mockDataConnectionChecker;
+  late NetworkInfoImpl networkInfo;
+  late MockDataConnectionChecker mockDataConnectionChecker;
 
   setUp(() {
     mockDataConnectionChecker = MockDataConnectionChecker();
-    networkInfo = NetworkInfoImpl(mockDataConnectionChecker!);
+    networkInfo = NetworkInfoImpl(mockDataConnectionChecker);
   });
 
   group('isConnected', () {
@@ -21,12 +21,12 @@ void main() {
         // arrange
         final tHasConnectionFuture = Future.value(true);
 
-        when(mockDataConnectionChecker!.hasConnection)
+        when(mockDataConnectionChecker.hasConnection)
             .thenAnswer((_) async => tHasConnectionFuture);
         // act
-        final result = networkInfo!.isConnected;
+        final result = networkInfo.isConnected;
         // assert
-        verify(mockDataConnectionChecker!.hasConnection);
+        verify(mockDataConnectionChecker.hasConnection);
         expect(result, tHasConnectionFuture);
       },
     );
