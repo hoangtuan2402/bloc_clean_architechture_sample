@@ -1,6 +1,8 @@
+import 'package:bloc_clean_architecture/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:bloc_clean_architecture/features/number_trivia/presentation/bloc/number_trivia_bloc.dart';
 import 'package:bloc_clean_architecture/features/number_trivia/presentation/bloc/number_trivia_event.dart';
 import 'package:bloc_clean_architecture/features/number_trivia/presentation/bloc/number_trivia_state.dart';
+import 'package:bloc_clean_architecture/features/number_trivia/presentation/widgets/display_listView.dart';
 import 'package:bloc_clean_architecture/features/number_trivia/presentation/widgets/loading_widget.dart';
 import 'package:bloc_clean_architecture/features/number_trivia/presentation/widgets/message_display.dart';
 import 'package:bloc_clean_architecture/features/number_trivia/presentation/widgets/trivia_controls.dart';
@@ -24,18 +26,6 @@ class NumberTriviaPage extends StatelessWidget {
       ),
     );
   }
-
-  // BlocProvider<NumberTriviaBloc> buildBody(BuildContext context) {
-  //   return BlocProvider(
-  //     create: (_) => sl<NumberTriviaBloc>()..add(LoadHomeEvent()),
-  //     child: const Center(
-  //       child: Text(
-  //         "HELLO BLOC V8",
-  //         style: TextStyle(fontSize: 30),
-  //       ),
-  //     ),
-  //   );
-  // }
 
   BlocProvider<NumberTriviaBloc> buildBody(BuildContext context) {
     return BlocProvider(
@@ -71,10 +61,38 @@ class NumberTriviaPage extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               // Bottom half
-              const TriviaControls()
+              const TriviaControls(),
+              const SizedBox(height: 20),
+              buildList(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  buildList() {
+    List<NumberTrivia> listNumberTrivia = [];
+    return SingleChildScrollView(
+      child: BlocBuilder<NumberTriviaBloc, NumberTriviaState>(
+        builder: (context, state) {
+          if (state is Empty) {
+            return Container();
+          } else if (state is Loading) {
+            return Container();
+          } else if (state is Loaded) {
+            listNumberTrivia.add(state.trivia);
+            return DisplayListView(
+              listNumberTrivia: listNumberTrivia,
+            );
+          } else if (state is Error) {
+            return MessageDisplay(
+              message: state.message,
+            );
+          } else {
+            return Container();
+          }
+        },
       ),
     );
   }
