@@ -8,4 +8,9 @@ class NumberTrivia extends Equatable {
 
   @override
   List<Object?> get props => [text, number];
+
+  @override
+  String toString() {
+    return text;
+  }
 }
